@@ -1,0 +1,37 @@
+version: '3.2'
+
+services:
+    hbm_php:
+        container_name: hbm_php
+        build: ./php
+        volumes:
+            - type: volume
+              source: C:\projects\xbt1\homebyme\byme_web\cms\byme
+              name: hbm_web
+              target: /var/www/html
+        links:
+            - hbm_db
+    hbm_web:
+        container_name: hbm_web
+        build: ./web
+        volumes:
+            - type: volume
+              source: C:\projects\xbt1\homebyme\byme_web\cms\byme
+              name: hbm_web
+              target: /var/www/html
+        links:
+            - hbm_php
+        ports:
+            - 1280:80
+    hbm_db:
+        container_name: hbm_db
+        build: ./db
+        environment:
+            - POSTGRES_DB=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=X6aS8jrn4Z6D
+        ports:
+            - 1254:5432
+
+volumes:
+    h:
