@@ -1,3 +1,3 @@
-FROM postgres:9.4.14
+FROM clkao/postgres-plv8:9.4-1.4
 
 ADD ./data/homebyme.gz /docker-entrypoint-initdb.d/

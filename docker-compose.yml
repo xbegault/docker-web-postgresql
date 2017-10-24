@@ -4,6 +4,15 @@ services:
     hbm_php:
         container_name: hbm_php
         build: ./php
+        environment:
+            - DB_INFRA_PORT_5432_TCP_ADDR=hbm_db
+            - DB_INFRA_PORT_5432_TCP_PORT=5432
+            - DB_INFRA_USER=postgres
+            - DB_INFRA_PASSWORD=postgres
+            - DB_INFRA_NAME=postgres
+            - WS_INFRA_PORT_8080_TCP_ADDR=ws
+            - WS_INFRA_PORT_8080_TCP_PORT=8080
+            - PLANNER_URL=http://localhost/
         volumes:
             - type: volume
               source: C:\projects\xbt1\homebyme\byme_web\cms\byme
@@ -11,6 +20,7 @@ services:
               target: /var/www/html
         links:
             - hbm_db
+            - hbm_memcached
     hbm_web:
         container_name: hbm_web
         build: ./web
@@ -29,9 +39,14 @@ services:
         environment:
             - POSTGRES_DB=postgres
             - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=X6aS8jrn4Z6D
+            - POSTGRES_PASSWORD=postgres
         ports:
             - 1254:5432
+    hbm_memcached:
+        container_name: hbm_memcached
+        image: memcached:1.5.2-alpine
+        ports:
+            - 1281:11211
 
 volumes:
-    h:
+    hbm_web:
