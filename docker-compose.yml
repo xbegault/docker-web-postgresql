@@ -32,7 +32,7 @@ services:
         links:
             - hbm_php
         ports:
-            - 1280:80
+            - 1282:80
     hbm_db:
         container_name: hbm_db
         build: ./db
@@ -42,11 +42,30 @@ services:
             - POSTGRES_PASSWORD=postgres
         ports:
             - 1254:5432
+    hbm_ws:
+        container_name: hbm_ws
+        build: ./ws
+        volumes:
+            - type: bind
+              source: C:\projects\xbt1\homebyme\byme_server\build\docker\infra.by.me\ws
+              target: /var/node
+        #links:
+        #    - hbm_php
+        ports:
+            - 1280:80
+
     hbm_memcached:
         container_name: hbm_memcached
-        image: memcached:1.5.2-alpine
+        image: memcached:alpine
         ports:
-            - 1281:11211
+            - 12211:11211
+
+    hbm_redis:
+        container_name: hbm_redis
+        image: redis:alpine
+        #links:
+        #    - hbm_ws
 
 volumes:
     hbm_web:
+    #hbm_ws:

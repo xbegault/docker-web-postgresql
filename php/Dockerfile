@@ -11,9 +11,10 @@ RUN apt-get update && \
     gem install --no-rdoc --no-ri sass -v 3.4.22 && \
     gem install --no-rdoc --no-ri compass
 
-COPY ./entrypoint.sh /
-RUN chmod a+rwx /entrypoint.sh
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www/html
 
+COPY ./entrypoint.sh /
+RUN chmod a+rwx /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh", "php-fpm"]
